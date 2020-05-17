@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class ="row">
+    
+        <div class="col-md-10 offset-md-3">
+            <div class="col-lg-8">
+                <h3>Makaleler</h3>
+                <hr>
+                </div>
+        </div>
+</div>
+<div class ="row">
+    <div class="col-md-10 offset-md-3">
+        <div class="col-lg-8">
+          <form class="form-inline my-2 my-lg-0">
+            {% csrf_token %} 
+            <input class="form-control mr-sm-2" type="search" name="keyword" placeholder="Ara" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Ara</button>
+          </form>
+      </div>
+    </div>
+<hr>
+</div>
+
+
+{% if articles %}
+
+{% for article in articles %}
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+
+    <!-- Post Content Column -->
+    <div class="col-lg-8">
+
+      <!-- Title -->
+      <a href="{% url 'article:detail' article.id %}" class="badge badge-secondary"><h4>{{article.title}}</h4></a> 
+        
+      <!-- Author -->
+      <p class="lead">
+        
+        <a href="#" class="badge badge-info">{{article.author.username}}</a><small> tarafından {{article.created_date}} tarihinde yayınlandı.</small>
+      </p>
+
+      <!-- Preview Image -->
+        {% if article.article_image %}
+          <a href="{% url 'article:detail' article.id %}"><img class="img-fluid rounded" src="{{article.article_image.url}}" alt=""></a>
+        {% else %}
+          <img class="img-fluid rounded" src="https://www.sinirsizbilim.com/wp-content/uploads/2019/05/uzay-nedir_sinirsizbilim.jpg" alt="">
+        {% endif %}
+     
+
+      <hr>
+
+      <!-- Post Content -->
+      <p class="lead">
+          {{article.content|safe|truncatewords:50}}
+      </p>
+        -
+      <a style ="float : right;" href="{% url 'article:detail' article.id %}" class ="btn btn-dark">Devamını Oku</a>
+      <hr>
+         
+        </div>
+      </div>
+      </div>
+
+{% endfor %}
+
+
+{% else %}
+<div class ="row">
+    
+    <div class="col-md-10 offset-md-3">
+        <div class="col-lg-8">
+<div class = "alert alert-danger">
+  Üzgünüm arama kriterlerine uyan bir makale bulunamadı.
+</div>
+</div>
+</div>
+</div>
+{% endif %}
+
+{% endblock body %}

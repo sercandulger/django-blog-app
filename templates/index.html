@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    
+<div class="jumbotron text-center">
+    <h2>Merhaba <span class="badge badge-pill badge-primary">{{request.user.username}}</span></h2>
+    <h3>Simple Developer Bloguna Hoşgeldin</h3>
+    <br>
+    <p>Bu blogta bir geliştirici olarak blog yazılarını paylaşabilir ve insanlara yardımcı olabilirsin ya da usta geliştiricilerin bloglarını okuyup kendini geliştirebilirsin.</p>
+</div>
+
+<p>
+    {% if request.user.is_authenticated %}
+    <small>Giriş Yapılan Kullanıcı,</small><span class="badge badge-info">{{request.user.username}}</span>
+             
+    {% else %}
+            <small>Lütfen Giriş Yapınız</small>
+    {% endif %}
+
+</p>
+{% endblock body %}
